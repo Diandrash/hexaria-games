@@ -3,10 +3,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentPlayerDisplay = document.getElementById('current-player');
     const currentHex = document.querySelector('.current-hex .hexagon .main');
 
-    // const rows = 8;
-    // const cols = 10;
-    const rows = 2;
-    const cols = 3;
+    const rows = 8;
+    const cols = 10;
+    // const rows = 2;
+    // const cols = 3;
     let currentPlayer = 1; // Player 1 starts first
     let player1Score = 0;
     let player2Score = 0;
