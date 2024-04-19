@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hexaria Game</title>
+    <style>
+        .container {
+            float: left;
+            width: 1400px;
+        }
+        .hex-row {
+            clear: left;
+        }
+        .even {
+            margin-left: 27px;
+        }
+        .hexagon {
+            float: left;
+            margin-left: 3px;
+            margin-bottom: -13px;
+            cursor: pointer;
+        }
+        .top {
+            width: 0;
+            border-bottom: 15px solid rgba(0, 0, 0, 0.393);
+            border-left: 26px solid transparent;
+            border-right: 26px solid transparent;
+        }
+        .main {
+            width: 52px;
+            height: 30px;
+            background-color: rgba(0, 0, 0, 0.393);
+        }
+        .bottom {
+            width: 0;
+            border-top: 15px solid rgba(0, 0, 0, 0.393);
+            border-left: 26px solid transparent;
+            border-right: 26px solid transparent;
+        }
+        .player1 .main {
+            background-color: red;
+        }
+        .player2 .main {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hexaria Game</h1>
+    <div id="game-board" class="container"></div>
+    
+    <script src="hexaria.js"></script>
+</body>
+</html>
