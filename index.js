@@ -1,5 +1,9 @@
 // script.js
 
+const homeAudio = document.getElementById('homeAudio')
+homeAudio.play()
+homeAudio.loop = true
+
 function togglePlayerNameInputs() {
     const gameModeRadios = document.getElementsByName('game-mode');
     const playerTwoInput = document.querySelector('.playerTwoInput');

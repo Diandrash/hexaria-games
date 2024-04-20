@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Hexaria</title>
+    <link rel="shortcut icon" href="./img/Fear.webp" type="image/x-icon">
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+    <audio controls autoplay hidden src="/audio/home-audio.mp3" id="mainAudio"></audio>
+
+
+    <h1 class="game-title">Input Player Name</h1>
+
+    <div class="container-input">
+        <input type="text" id="playerOneInput" value="Player 1" autofocus> <br>
+        <input type="text" id="playerTwoInput" value="Player 2"> <br>
+        <button onclick="multiNameInput()">Next</button>
+    </div>
+
+    <script src="/home.js"></script>
+</body>
+</html>

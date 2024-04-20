@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -9,11 +11,54 @@ body {
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    font-family: 'Montserrat';
 }
 
 .text-title {
     color: white;
+    align-self: center;
+}
+
+.container-top { 
     margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    width: 56rem;
+}
+.container-top img {
+    width: 1.4rem;
+    margin-left: 10px;
+    align-self: center;
+}
+
+.right-area {
+    display: flex;
+}
+.right-area .player {
+    display: flex;
+}
+
+.player-1 h3 {
+    align-self: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: red;
+}
+
+.player-2 h3 {
+    align-self: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: yellow;
+}
+
+.player-1 p, .player-2 p {
+    margin-right: 5px;
+    align-self: center;
+    margin-left: 10px;
+    font-size: 16px;
+    color: white;
+    font-weight: bolder;
 }
 
 .container {
@@ -22,12 +67,12 @@ body {
 }
 .board-area {
     width: 615px;
-    height: 533px;
+    /* height: 533px; */
     border: 1px solid white;
     padding-left: 1rem;
     padding-right: 1rem;
     padding-top: 1rem;
-    padding-bottom: 10rem;
+    padding-bottom: 1.5rem;
     display: flex;
     flex-direction: column;
 }
@@ -35,42 +80,8 @@ body {
     float: left;
 }
 
-.player-score {
-    align-self: center;
-    display: flex;
-    margin-top: 1.3rem;
-}
 
-.player {
-    display: flex;
-    flex-direction: column;
-    margin-left: 1rem;
-    margin-right: 1rem;
-    text-align: center;
-}
-.one h3 {
-    font-size: 14px;
-    font-weight: bold;
-    color: red;
-    margin-bottom: 10px;
-}
-.two h3 {
-    font-size: 14px;
-    font-weight: bold;
-    color: yellow;
-    margin-bottom: 10px;
-}
 
-.one p {
-    font-size: 1.5rem;
-    color: white;
-    font-weight: bolder;
-}
-.two p {
-    font-size: 1.5rem;
-    color: white;
-    font-weight: bolder;
-}
 
 .current-hex {
     align-self: center;
@@ -87,9 +98,9 @@ body {
     float: left;
     margin-left: 3px;
     margin-bottom: -13px;
-    cursor: pointer;
 }
-.hexagon:hover {
+.hexagon:hover:not(.disabled) {
+    cursor: pointer;
     .top {
         border-bottom: 15px solid rgba(229, 228, 228, 0.683);
     }
@@ -112,6 +123,9 @@ body {
     width: 52px;
     height: 30px;
     background-color: rgba(229, 228, 228, 0.393);
+    font-weight: bold;
+    text-align: center;
+
 }
 
 
@@ -125,6 +139,7 @@ body {
 
 .player1 .main {
     background-color: red;
+    
 }
 .player2 .main {
     background-color: yellow;
@@ -145,13 +160,13 @@ body {
 .leaderboard-title {
     color: white;
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-weight: 600;
     margin-bottom: 1rem;
 }
 
 .players-name {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 200;
 }
 .score-details {
@@ -160,7 +175,7 @@ body {
     margin-top: 3px;
 }
 .score {
-    font-size: 1.3rem;
+    font-size: 1rem;
     font-weight: 600;
 }
 .btn-leaderboard {

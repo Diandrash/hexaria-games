@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: rgb(30, 24, 32);
+    background-image: url(/img/bg-opacity.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Montserrat';
+}
+
+.game-title {
+    margin-top: 2.5rem;
+    color: white;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+.game-subtitle {
+    margin-top: 10px;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 800;
+}
+
+.container {
+    width: 30rem;
+    display: flex;
+    justify-content: center;
+}
+
+.mode {
+    margin-top: 5rem;
+    margin-left: 5rem;
+    margin-right: 5rem;
+}
+
+.mode img {
+    width: 10rem;
+}
+.mode img:hover {
+    width: 10.2rem;
+}
+.mode h1 {
+    color: white;
+    margin-top: 5px;
+    font-size: 1.3rem;
+    text-align: center;
+}
+
+.container-input {
+    margin-top: 3rem;
+}
+.container-input input {
+    margin-top: 3rem;
+    width: 27rem;
+    height: 4rem;
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.8rem;
+}
+
+.container-input input#playerTwoInput {
+    background-color: orange;
+}
+
+.container-input button {
+    margin-top: 3rem;
+    width: 27rem;
+    height: 4rem;
+    background-color: green;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.8rem;
+}

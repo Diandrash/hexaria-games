@@ -1,53 +1,28 @@
-<!-- index.html -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Hexaria Game</title>
-    <link rel="shortcut icon" href="/Fear.webp" type="image/x-icon">
-    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <title>Welcome to Hexaria</title>
+    <link rel="shortcut icon" href="./img/Fear.webp" type="image/x-icon">
+    <link rel="stylesheet" href="home.css">
 </head>
 <body>
+    <audio controls autoplay hidden src="/audio/home-audio.mp3" id="mainAudio"></audio>
+    <h1 class="game-title">Welcome to Hexaria</h1>
+    <h3 class="game-subtitle">Select Versus Mode</h3>
+
     <div class="container">
-        <h1>Welcome to Hexaria Game!</h1>
-        <p>Select Game Mode and Difficulty:</p>
-
-        <div class="mode-selection">
-            <label>
-                <input type="radio" name="game-mode" value="player" onclick="togglePlayerNameInputs()"> Play Against Another Player
-            </label>
-            <label>
-                <input checked type="radio" name="game-mode" value="bot" onclick="togglePlayerNameInputs()"> Play Against Bot
-            </label>
+        <div class="mode solo-mode" onclick="selectComputerMode()">
+            <img src="/img/Computer Icon.png" alt="">
+            <h1>Computer</h1>
         </div>
-
-        <div class="difficulty-selection">
-            <label>
-                <input checked type="radio" name="difficulty" value="easy"> Easy
-            </label>
-            <label>
-                <input type="radio" name="difficulty" value="medium"> Medium
-            </label>
-            <label>
-                <input type="radio" name="difficulty" value="hard"> Hard
-            </label>
+        <div class="mode multi-mode" onclick="selectMultiplayerMode()">
+            <img src="/img/Multiplayer Icon.png" alt="">
+            <h1>Multiplayer</h1>
         </div>
-
-        <div class="player-name-inputs">
-                <label for="player1-name">Player 1 Name:</label>
-                <input type="text" value="Player 1" id="player1-name" placeholder="Enter Player 1's Name">
-                
-                <div class="playerTwoInput" style="display: none;">
-                    <label for="player2-name">Player 2 Name:</label>
-                    <input value="Player 2" type="text" id="player2-name" placeholder="Enter Player 2's Name">
-                </div>
-            </div>
-            
-            <button type="submit" onclick="startGame()">Start Game</button>
     </div>
 
-    <script src="index.js"></script>
+    <script src="/home.js"></script>
 </body>
 </html>

@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Take Value from URL
     const urlParams = new URLSearchParams(window.location.search)
     const player1 = urlParams.get('player1')
     const player2 = urlParams.get('player2')
@@ -6,8 +7,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const difficulty = urlParams.get('difficulty')
     
     
+    // Initialize Default Value on Board
+    const mainAudio = document.getElementById('mainAudio')
+    mainAudio.play()
+    mainAudio.loop = true
     const gameBoard = document.getElementById('game-board');
-    const currentPlayerDisplay = document.getElementById('current-player');
     const currentHex = document.querySelector('.current-hex .hexagon .main');
     const rows = 8;
     const cols = 10;
@@ -17,9 +21,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let player1Score = 0;
     let player2Score = 0;
     let filledHexagon = 0;
+
+    // Disabled Hex Featured
     let disabledHexCount = 0
     let disabledHexPosition = []
 
+    // Initialize display value
     const player1ScoreDisplay = document.getElementById('player1-score');
     const player2ScoreDisplay = document.getElementById('player2-score');
     const player1Name = document.getElementById('player1-name')
@@ -28,36 +35,42 @@ document.addEventListener('DOMContentLoaded', () => {
     // Set nilai acak untuk current hexagon saat game dimulai
     setRandomValue(currentHex);
     setCurrentHexColor();
+
+    // Display Data on Screen
     player1ScoreDisplay.textContent = player1Score;
     player2ScoreDisplay.textContent = player2Score;
     player1Name.textContent = player1
     player2Name.textContent = player2
 
+    console.log({TotalHexagon: rows * cols});
+
+    // Difficulty Features
     if (difficulty === 'easy') {
-        disabledHexCount = 3
+        disabledHexCount = parseInt(rows * cols / 10)
     } else if (difficulty === 'medium') {
-        disabledHexCount = 6
+        disabledHexCount = parseInt(rows * cols / 6)
     } else if (difficulty === 'hard'){
-        disabledHexCount = 14
+        disabledHexCount = parseInt(rows * cols / 4);
     }
-    
     // Generate posisi acak untuk heksagon yang terdisabled
-    while (disabledHexPosition.length < disabledHexCount) {
+    while (disabledHexPosition.length <= disabledHexCount) {
         const randomRow = Math.floor(Math.random() * rows)
         const randomCol = Math.floor(Math.random() * cols)
         const position = `${randomRow}, ${randomCol}`
-
         if (!disabledHexPosition.includes(position)) {
             disabledHexPosition.push(position);
         }
+        // console.log({hexagonDisabled});
     }
 
-    const leaderboardArea = document.querySelector('.leaderboard-area');
 
+    console.log({disabledHexPosition: disabledHexPosition.length});
+
+    // Leaderboard Features
+    const leaderboardArea = document.querySelector('.leaderboard-area');
     // Ambil data leaderboard dari localStorage
     const parsingData = JSON.parse(localStorage.getItem('leaderboard')) || [];
     const numEntries = 5;
-
     // Ambil lima entri terakhir (atau kurang jika tidak cukup)
     const startIndex = Math.max(parsingData.length - numEntries, 0);
     const leaderboardData = parsingData.slice(startIndex);
@@ -79,15 +92,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 <button class="btn-leaderboard">Show Details</button>
             </div>
         `;
-
         // Tambahkan elemen ke area leaderboard
         leaderboardArea.appendChild(leaderboardDetails);
     });
-    // Pastikan tidak ada duplikasi posisi yang sama
+
+
+
     console.log({ Turn: currentPlayer });
 
+
+    // Looping Hexagon
     // Inisialisasi papan permainan dengan hexagon
-    for (let row = 0; row < rows; row++) {
+    for (let row = 1; row <= rows; row++) {
         const hexRow = document.createElement('div');
         hexRow.classList.add('hex-row');
         if (row % 2 === 1) {
@@ -166,6 +182,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         gameBoard.appendChild(hexRow);
     }
+
+    const hexagonDisabled = document.querySelectorAll('.disabled')
+    const countHexagonDisabled = hexagonDisabled.length
+    console.log({countHexagonDisabled});
 
     // Fungsi untuk mengatur nilai acak pada hexagon
     function setHexagonValue(hexagon, value) {
@@ -325,7 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function decideWinner() {
-        if (filledHexagon + disabledHexCount === rows * cols) {
+        if (filledHexagon + countHexagonDisabled === rows * cols) {
             let winner = '';
             if (player1Score > player2Score) {
                 winner = player1;
