@@ -89,23 +89,40 @@ body {
     margin-bottom: -13px;
     cursor: pointer;
 }
+.hexagon:hover {
+    .top {
+        border-bottom: 15px solid rgba(229, 228, 228, 0.683);
+    }
+    .main{
+        background-color: rgba(229, 228, 228, 0.683);
+    }
+    .bottom{
+        border-top: 15px solid rgba(229, 228, 228, 0.683);
+    }
+}
 .top {
     width: 0;
     border-bottom: 15px solid rgba(229, 228, 228, 0.393);
     border-left: 26px solid transparent;
     border-right: 26px solid transparent;
 }
+
+
 .main {
     width: 52px;
     height: 30px;
     background-color: rgba(229, 228, 228, 0.393);
 }
+
+
 .bottom {
     width: 0;
     border-top: 15px solid rgba(229, 228, 228, 0.393);
     border-left: 26px solid transparent;
     border-right: 26px solid transparent;
 }
+
+
 .player1 .main {
     background-color: red;
 }
@@ -148,4 +165,14 @@ body {
 }
 .btn-leaderboard {
     padding: 2px 10px;
+}
+
+.disabled .main {
+    background-color: rgba(25, 18, 18, 0.781);
+}
+.disabled .top {
+    border-bottom: 15px solid rgba(25, 18, 18, 0.781);
+}
+.disabled .bottom {
+    border-top: 15px solid rgba(25, 18, 18, 0.781);
 }

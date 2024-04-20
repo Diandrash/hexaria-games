@@ -1,8 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search)
+    const player1 = urlParams.get('player1')
+    const player2 = urlParams.get('player2')
+    const mode = urlParams.get('mode')
+    const difficulty = urlParams.get('difficulty')
+    
+    
     const gameBoard = document.getElementById('game-board');
     const currentPlayerDisplay = document.getElementById('current-player');
     const currentHex = document.querySelector('.current-hex .hexagon .main');
-
     const rows = 8;
     const cols = 10;
     // const rows = 2;
@@ -11,16 +17,73 @@ document.addEventListener('DOMContentLoaded', () => {
     let player1Score = 0;
     let player2Score = 0;
     let filledHexagon = 0;
+    let disabledHexCount = 0
+    let disabledHexPosition = []
 
     const player1ScoreDisplay = document.getElementById('player1-score');
     const player2ScoreDisplay = document.getElementById('player2-score');
+    const player1Name = document.getElementById('player1-name')
+    const player2Name = document.getElementById('player2-name')
 
     // Set nilai acak untuk current hexagon saat game dimulai
     setRandomValue(currentHex);
     setCurrentHexColor();
     player1ScoreDisplay.textContent = player1Score;
     player2ScoreDisplay.textContent = player2Score;
+    player1Name.textContent = player1
+    player2Name.textContent = player2
+
+    if (difficulty === 'easy') {
+        disabledHexCount = 3
+    } else if (difficulty === 'medium') {
+        disabledHexCount = 6
+    } else if (difficulty === 'hard'){
+        disabledHexCount = 14
+    }
     
+    // Generate posisi acak untuk heksagon yang terdisabled
+    while (disabledHexPosition.length < disabledHexCount) {
+        const randomRow = Math.floor(Math.random() * rows)
+        const randomCol = Math.floor(Math.random() * cols)
+        const position = `${randomRow}, ${randomCol}`
+
+        if (!disabledHexPosition.includes(position)) {
+            disabledHexPosition.push(position);
+        }
+    }
+
+    const leaderboardArea = document.querySelector('.leaderboard-area');
+
+    // Ambil data leaderboard dari localStorage
+    const parsingData = JSON.parse(localStorage.getItem('leaderboard')) || [];
+    const numEntries = 5;
+
+    // Ambil lima entri terakhir (atau kurang jika tidak cukup)
+    const startIndex = Math.max(parsingData.length - numEntries, 0);
+    const leaderboardData = parsingData.slice(startIndex);
+    // Loop data leaderboard untuk membuat elemen HTML
+    leaderboardData.forEach(entry => {
+        // Buat elemen untuk setiap entri leaderboard
+        const leaderboardDetails = document.createElement('div');
+        leaderboardDetails.classList.add('leaderboard-details');
+
+        // Tambahkan informasi nama pemain dan skor
+        const playerNameText = `${entry.player1.name} Vs ${entry.player2.name}`;
+        const playerScoreText = `${entry.player1.score} - ${entry.player2.score}`;
+
+        // Buat struktur elemen HTML untuk setiap entri leaderboard
+        leaderboardDetails.innerHTML = `
+            <h1 class="players-name">${playerNameText}</h1>
+            <div class="score-details">
+                <h1 class="score">${playerScoreText}</h1>
+                <button class="btn-leaderboard">Show Details</button>
+            </div>
+        `;
+
+        // Tambahkan elemen ke area leaderboard
+        leaderboardArea.appendChild(leaderboardDetails);
+    });
+    // Pastikan tidak ada duplikasi posisi yang sama
     console.log({ Turn: currentPlayer });
 
     // Inisialisasi papan permainan dengan hexagon
@@ -50,8 +113,14 @@ document.addEventListener('DOMContentLoaded', () => {
             hexagon.appendChild(mainDiv);
             hexagon.appendChild(bottomDiv);
 
+             // Disable heksagon jika posisinya terdapat dalam daftar posisi yang terdisabled
+            const position = `${row}, ${col}`
+            if (disabledHexPosition.includes(position)) {
+                hexagon.classList.add('disabled')
+            }
+
             hexagon.addEventListener('click', () => {
-                if (hexagon.dataset.owner) {
+                if (hexagon.dataset.owner || hexagon.classList.contains('disabled')) {
                     // Jika heksagon sudah dimiliki, keluar dari fungsi
                     return;
                 }
@@ -74,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 calculateScore(hexagon);
                 checkAndCaptureNeighbours(hexagon);
                 filledHexagon++;
-                console.log({filledHexagon: filledHexagon});
+                console.log({filledHexagon});
                 // Ganti giliran pemain
                 currentPlayer = currentPlayer === 1 ? 2 : 1;
 
@@ -82,15 +151,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 setCurrentHexColor();
                 setRandomValue(currentHex);
                 
-                if (filledHexagon === rows * cols) {
-                    if (player1Score > player2Score) {
-                        alert('Player 1 wins with the highest score!');
-                    } else if (player1Score < player2Score) {
-                        alert('Player 2 wins with the highest score!');
-                    } else {
-                        alert('GAME DRAW');
-                    }
-                } 
+                if (mode === 'bot' && currentPlayer === 2) {
+                    playerBotTurn()
+                }
+
+                console.log({filledHexagon});
+                console.log({disabledHexCount});
+                console.log({total: rows * cols});
+                decideWinner()
             });
 
             hexRow.appendChild(hexagon);
@@ -208,4 +276,82 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
+
+    function playerBotTurn() {
+        const emptyHexagon = Array.from(document.querySelectorAll('.game-board .hexagon:not([data-owner])'));
+    
+        // Filter hanya hexagon yang tidak terdisabled
+        const validEmptyHexagon = emptyHexagon.filter(hexagon => !hexagon.classList.contains('disabled'));
+        console.log({validEmptyHexagon});
+        if (validEmptyHexagon.length > 0) {
+            const randomIndex = Math.floor(Math.random() * validEmptyHexagon.length);
+            const botHexagon = validEmptyHexagon[randomIndex];
+    
+            const randomValue = Math.floor(Math.random() * 20) + 1;
+            setHexagonValue(botHexagon, randomValue);
+            botHexagon.dataset.owner = 2;
+    
+            const mainColor = 'yellow';
+            botHexagon.querySelector('.main').style.backgroundColor = mainColor;
+            botHexagon.querySelector('.top').style.borderBottomColor = mainColor;
+            botHexagon.querySelector('.bottom').style.borderTopColor = mainColor;
+    
+            calculateScore(botHexagon);
+            checkAndCaptureNeighbours(botHexagon);
+            filledHexagon++;
+    
+            currentPlayer = 1;
+            setCurrentHexColor();
+        }
+    }
+    
+
+    function saveScoreToLocalStorage(player1Name, player1Score, player2Name, player2Score) {
+        const leaderboardEntry = {
+            player1: {
+                name: player1Name,
+                score: player1Score
+            },
+            player2: {
+                name: player2Name,
+                score: player2Score
+            }
+        };
+    
+        // Menyimpan data leaderboard ke localStorage
+        const leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
+        leaderboard.push(leaderboardEntry);
+        localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
+    }
+    
+    function decideWinner() {
+        if (filledHexagon + disabledHexCount === rows * cols) {
+            let winner = '';
+            if (player1Score > player2Score) {
+                winner = player1;
+                alert(`${player1} wins with the highest score!`);
+            } else if (player1Score < player2Score) {
+                winner = player2;
+                alert(`${player2} wins with the highest score!`);
+            } else {
+                alert('GAME DRAW');
+                return; // Jika draw, tidak perlu menyimpan ke leaderboard
+            }
+    
+            // Simpan skor ke Local Storage
+            saveScoreToLocalStorage(player1, player1Score, player2, player2Score);
+        }
+    }
+    
+    function saveScoreToLocalStorage(player1Name, player1Score, player2Name, player2Score) {
+        const gameResult = {
+            player1: { name: player1Name, score: player1Score },
+            player2: { name: player2Name, score: player2Score }
+        };
+    
+        let leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
+        leaderboard.push(gameResult);
+        localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
+    }
+    
 });

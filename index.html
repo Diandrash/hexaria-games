@@ -1,62 +1,53 @@
+<!-- index.html -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hexaria Game</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Welcome to Hexaria Game</title>
+    <link rel="shortcut icon" href="/Fear.webp" type="image/x-icon">
+    <!-- <link rel="stylesheet" href="styles.css"> -->
 </head>
 <body>
-    <h3 class="text-title">Hexaria Game</h3>
-
     <div class="container">
-        <div class="board-area">
-            <div id="game-board" class="game-board"></div>
-            <div class="current-hex">
-                <div class="hexagon">
-                    <div class="top"></div>
-                    <div class="main"></div>
-                    <div class="bottom"></div>
-                </div>
-            </div>
-            <div class="player-score">
-                <div class="player one">
-                    <h3>Player 1</h3>
-                    <p id="player1-score">280</p>
-                </div>
-                <div class="player two">
-                    <h3>Player 2</h3>
-                    <p id="player2-score">144</p>
-                </div>
-            </div>
+        <h1>Welcome to Hexaria Game!</h1>
+        <p>Select Game Mode and Difficulty:</p>
+
+        <div class="mode-selection">
+            <label>
+                <input type="radio" name="game-mode" value="player" onclick="togglePlayerNameInputs()"> Play Against Another Player
+            </label>
+            <label>
+                <input checked type="radio" name="game-mode" value="bot" onclick="togglePlayerNameInputs()"> Play Against Bot
+            </label>
         </div>
-        <div class="leaderboard-area">
-            <h1 class="leaderboard-title">Leaderboard</h1>
+
+        <div class="difficulty-selection">
+            <label>
+                <input checked type="radio" name="difficulty" value="easy"> Easy
+            </label>
+            <label>
+                <input type="radio" name="difficulty" value="medium"> Medium
+            </label>
+            <label>
+                <input type="radio" name="difficulty" value="hard"> Hard
+            </label>
+        </div>
+
+        <div class="player-name-inputs">
+                <label for="player1-name">Player 1 Name:</label>
+                <input type="text" value="Player 1" id="player1-name" placeholder="Enter Player 1's Name">
+                
+                <div class="playerTwoInput" style="display: none;">
+                    <label for="player2-name">Player 2 Name:</label>
+                    <input value="Player 2" type="text" id="player2-name" placeholder="Enter Player 2's Name">
+                </div>
+            </div>
             
-            <div class="leaderboard-details">
-                <h1 class="players-name">Player 1 Vs Player 2</h1>
-                <div class="score-details">
-                    <h1 class="score">48 - 32</h1>
-                    <button class="btn-leaderboard">Show Details</button>
-                </div>
-            </div>
-            <div class="leaderboard-details">
-                <h1 class="players-name">Player 1 Vs Player 2</h1>
-                <div class="score-details">
-                    <h1 class="score">48 - 32</h1>
-                    <button class="btn-leaderboard">Show Details</button>
-                </div>
-            </div>
-            <div class="leaderboard-details">
-                <h1 class="players-name">Player 1 Vs Player 2</h1>
-                <div class="score-details">
-                    <h1 class="score">48 - 32</h1>
-                    <button class="btn-leaderboard">Show Details</button>
-                </div>
-            </div>
-        </div>
+            <button type="submit" onclick="startGame()">Start Game</button>
     </div>
-    
-    <script src="hexaria.js"></script>
+
+    <script src="index.js"></script>
 </body>
 </html>
